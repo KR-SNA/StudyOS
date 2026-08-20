@@ -29,7 +29,8 @@ body{font-family:'Baloo 2',cursive;padding:18px}
 .top{display:grid;grid-template-columns:190px 1fr;gap:12px;align-items:center;height:125px}
 .sticky{padding:13px 18px;transform:rotate(-3deg);border:2px solid var(--ink);box-shadow:4px 5px 0 rgba(23,32,74,.15);height:72px}
 .sticky.pink{background:#ff73d4}
-.sticky.yellow{background:#ffe51d;margin-left:25px;margin-top:-3px;transform:rotate(-7deg);height:65px}
+.sticky.yellow{background:#ffe51d;margin-left:25px;margin-top:-3px;transform:rotate(-7deg);height:65px; transition: transform 0.2s ease;}
+.sticky.yellow:hover{transform:rotate(-4deg) scale(1.05);}
 .sticky h2{margin:0;font-size:31px;line-height:.9}
 .title{text-align:center;font-size:63px;line-height:.73;margin:0;font-weight:700;letter-spacing:-2px;color:#fff;
   text-shadow:4px 4px 0 var(--pink),-4px -4px 0 var(--ink),7px 7px 0 var(--ink)}
@@ -122,7 +123,14 @@ body{font-family:'Baloo 2',cursive;padding:18px}
   <div class="top">
     <div>
       <div class="sticky pink"><h2>Things<br>To Do:</h2></div>
-      <div class="sticky yellow"></div>
+      
+      <!-- THIS IS THE NEW CHAPTRAK BUTTON INSIDE THE YELLOW STICKY -->
+      <a href="https://kr-sna.github.io/StudyOS-ChapTrak/" target="_blank" style="text-decoration: none; color: var(--ink);">
+        <div class="sticky yellow" style="display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer;">
+          <h2 style="font-size: 20px;">📚 ChapTrak ↗️</h2>
+        </div>
+      </a>
+
     </div>
     <h1 class="title">DAILY<br><span>PLANNER</span></h1>
   </div>
@@ -367,9 +375,6 @@ fields.forEach(id=>{
   });
 });
 
-// Safety net: force-save the instant the tab/app is backgrounded, instead of
-// waiting on the 500ms debounce above. Android can freeze or kill a background
-// tab before that timer ever fires, so this protects your last few keystrokes.
 function flushSave(){
   clearTimeout(window.autoSave);
   savePlanner();
@@ -378,8 +383,6 @@ document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") flushSave();
 });
 window.addEventListener("pagehide", flushSave);
-
-
 
 function getSavedDays(){
   const days=[];
